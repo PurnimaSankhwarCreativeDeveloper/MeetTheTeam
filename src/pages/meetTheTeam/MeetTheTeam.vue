@@ -5,25 +5,24 @@
     </div>
     <p class="header">Meet the Team</p>
     <div v-if="isLoading" id="loading-spinner"></div>
-    <div v-else>
-      <TopBar
-        :is-card-view="isCardView"
-        @change="handleChange"
-        @sort="sortUsers"
-        @filter="filterUsers"
+    <TopBar
+      v-else
+      :is-card-view="isCardView"
+      @change="handleChange"
+      @sort="sortUsers"
+      @filter="filterUsers"
+    />
+    <div v-if="isCardView">
+      <CardTemplate
+        :displayed-users="filteredUsers"
+        @childMounted="loadUsers"
       />
-      <div v-if="isCardView">
-        <CardTemplate
-          :displayed-users="filteredUsers"
-          @childMounted="loadUsers"
-        />
-      </div>
-      <div v-else>
-        <ListTemplate
-          :displayed-users="filteredUsers"
-          @childMounted="loadUsers"
-        />
-      </div>
+    </div>
+    <div v-else>
+      <ListTemplate
+        :displayed-users="filteredUsers"
+        @childMounted="loadUsers"
+      />
     </div>
   </div>
 </template>

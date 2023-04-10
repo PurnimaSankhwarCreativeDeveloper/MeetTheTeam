@@ -2,11 +2,11 @@
   <div class="user-list">
     <ul @scroll="handleScroll" ref="listTemplate">
       <li
-        v-for="user in displayedUsers"
-        :key="user.id"
-        :style="{ backgroundColor: getRandomColor() }"
+        v-for="(user, index) in displayedUsers"
+        :key="index"
+        :style="{ backgroundColor: this.applyColors[index] }"
       >
-        <div class="div1" :style="{ backgroundColor: bgColor }">
+        <div class="div1" :style="{ backgroundColor: this.applyColors[index] }">
           <img :src="user.picture.medium" :alt="user.name.first" />
         </div>
         <div class="div2">
@@ -15,7 +15,7 @@
           <p class="fill"></p>
         </div>
       </li>
-      <div ref="sentinel"></div>
+      <div ref="sentinel">{{ fillColor() }}</div>
     </ul>
   </div>
 </template>
@@ -36,6 +36,7 @@ export default {
       lastColorIndex: -1,
       observer: null,
       currentPage: 1,
+      applyColors: [],
     };
   },
 
@@ -50,14 +51,19 @@ export default {
   },
 
   methods: {
+    fillColor() {
+      for (let i = 0; i < this.displayedUsers.length; i++) {
+        this.applyColors.push(this.getRandomColor());
+      }
+    },
+
     getRandomColor() {
       let index;
       do {
         index = Math.floor(Math.random() * this.colors.length);
       } while (index === this.lastColorIndex);
       this.lastColorIndex = index;
-      this.bgColor = this.colors[index];
-      return this.bgColor;
+      return this.colors[index];
     },
   },
 };

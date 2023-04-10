@@ -1,46 +1,47 @@
   <template>
-    <div class="user-cards" ref="cardTemplate">
-      <div class="user-card" v-for="user in displayedUsers" :key="user.id">
-        <div class="header-dv" :style="{ backgroundColor: getRandomColor() }">
-          <div class="header">{{ user.name.first }} {{ user.name.last }}</div>
-          <img :src="user.picture.large" :alt="user.name.first" />
-          <svg style="margin-top: 20%" viewBox="0 0 500 400">
-            <path
-              fill="white"
-              d="M0,250
+  <div class="user-cards" ref="cardTemplate">
+    <div class="user-card" v-for="(user, index) in displayedUsers" :key="index">
+      <div class="header-dv" :style="{ backgroundColor: applyColors[index] }">
+        <div class="header">{{ user.name.first }} {{ user.name.last }}</div>
+        <img :src="user.picture.large" :alt="user.name.first" />
+        <svg style="margin-top: 20%" viewBox="0 0 500 400">
+          <path
+            fill="white"
+            d="M0,250
                                   L0,500
                                   L500,500
                                   L500,300
                                   Q350,200 200,250
                                   Q50,300 0,250
                                   Z"
-            />
-          </svg>
-        </div>
-        <div class="main-dv"></div>
-        <p class="footer1">{{ user.location.city }}</p>
-        <p class="footer2"><i class="fa-regular fa-envelope"></i></p>
+          />
+        </svg>
       </div>
-      <div ref="sentinel"></div>
+      <div class="main-dv"></div>
+      <p class="footer1">{{ user.location.city }}</p>
+      <p class="footer2"><i class="fa-regular fa-envelope"></i></p>
     </div>
-  </template>
-  <script>
-  export default {
-    props: {
-      displayedUsers: {
-        type: Array,
-        default: () => [],
-      },
+    <div ref="sentinel">{{ fillColor() }}</div>
+  </div>
+</template>
+<script>
+export default {
+  props: {
+    displayedUsers: {
+      type: Array,
+      default: () => [],
     },
+  },
 
-    data() {
-      return {
-        colors: ["#e8cdad", "#a2b8a9", "#e0c0b2"],
-        lastColorIndex: -1,
-        observer: null,
-        currentPage: 1,
-      };
-    },
+  data() {
+    return {
+      colors: ["#e8cdad", "#a2b8a9", "#e0c0b2"],
+      lastColorIndex: -1,
+      observer: null,
+      currentPage: 1,
+      applyColors: [],
+    };
+  },
 
     mounted() {
       this.observer = new IntersectionObserver((entries) => {
@@ -52,18 +53,24 @@
       this.observer.observe(this.$refs.sentinel);
     },
 
-    methods: {
-      getRandomColor() {
-        let index;
-        do {
-          index = Math.floor(Math.random() * this.colors.length);
-        } while (index === this.lastColorIndex);
-        this.lastColorIndex = index;
-        return this.colors[index];
-      },
+  methods: {
+    fillColor() {
+      for (let i = 0; i < this.displayedUsers.length; i++) {
+        this.applyColors.push(this.getRandomColor());
+      }
     },
-  };
-  </script>
+
+    getRandomColor() {
+      let index;
+      do {
+        index = Math.floor(Math.random() * this.colors.length);
+      } while (index === this.lastColorIndex);
+      this.lastColorIndex = index;
+      return this.colors[index];
+    },
+  },
+};
+</script>
 
 <style scoped>
 .footer1 {
