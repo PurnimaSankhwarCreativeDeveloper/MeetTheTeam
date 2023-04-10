@@ -1,7 +1,5 @@
 <template>
-  <div id="app"><link rel="stylesheet" 
-        href="node_modules/@fortawesome/fontawesome-free/css/all.css">
-        <!-- <p>Have a cup of coffee: <i class="fas fa-coffee"></i> </p> -->
+  <div id="app">
     <Layout>
       <router-view></router-view>
     </Layout>

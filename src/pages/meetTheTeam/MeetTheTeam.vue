@@ -1,17 +1,29 @@
 <template>
   <div ref="main">
-    <p class="header">Meet the Team</p>
-    <TopBar
-      :is-card-view="isCardView"
-      @change="handleChange"
-      @sort="sortUsers"
-      @filter="filterUsers"
-    />
-    <div v-if="isCardView">
-      <CardTemplate :displayed-users="filteredUsers" @childMounted="loadUsers" />
+    <div class="error-message" v-if="error">
+      <p>{{ errorMessage }}</p>
     </div>
+    <p class="header">Meet the Team</p>
+    <div v-if="isLoading" id="loading-spinner"></div>
     <div v-else>
-      <ListTemplate :displayed-users="filteredUsers" @childMounted="loadUsers" />
+      <TopBar
+        :is-card-view="isCardView"
+        @change="handleChange"
+        @sort="sortUsers"
+        @filter="filterUsers"
+      />
+      <div v-if="isCardView">
+        <CardTemplate
+          :displayed-users="filteredUsers"
+          @childMounted="loadUsers"
+        />
+      </div>
+      <div v-else>
+        <ListTemplate
+          :displayed-users="filteredUsers"
+          @childMounted="loadUsers"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +45,8 @@ export default {
       currentPage: 1,
       searchInput: "",
       sortAsc: false,
+      error: false,
+      errorMessage: "",
     };
   },
 
@@ -58,12 +72,19 @@ export default {
     async loadUsers(currentPage) {
       this.isLoading = true;
       if (this.users.length === 0) {
-        const response = await Api.fetchIndividuals();
-        if (response) {
-          this.users.push(...response.results);
+        try {
+          const response = await Api.fetchIndividuals();
+          if (response) {
+            this.users.push(...response.results);
+          }
+        } catch (error) {
+          this.error = true;
+          this.errorMessage =
+            "Oops, something went wrong. Please try again later.";
         }
       }
       this.currentPage = currentPage;
+      this.isLoading = false;
     },
   },
 
@@ -96,6 +117,36 @@ export default {
 };
 </script>
 <style scoped>
+.error-message {
+  position: absolute;
+  left: 10%;
+  width: 78%;
+  background-color: #ffcccc;
+  border: 1px solid #ff0000;
+  color: #ff0000;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  top: 0;
+}
+
+#loading-spinner {
+  border: 5px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s infinite linear;
+  position: absolute;
+  left: 43%;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .header {
   margin-left: 5%;
   padding: 10px;
@@ -108,6 +159,16 @@ export default {
     margin-left: 30%;
     font-size: xx-large;
     font-weight: 500;
+  }
+
+  #loading-spinner {
+    left: 50%;
+  }
+
+  .error-message {
+    left: 30%;
+    width: 38%;
+    top: 5%;
   }
 }
 </style>
