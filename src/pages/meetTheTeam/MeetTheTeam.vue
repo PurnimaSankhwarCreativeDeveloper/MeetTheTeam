@@ -75,6 +75,10 @@ export default {
           const response = await Api.fetchIndividuals();
           if (response) {
             this.users.push(...response.results);
+            console.log(
+              "🚀 ~ file: MeetTheTeam.vue ~ line 78 ~ loadUsers ~ this.users",
+              this.users
+            );
           }
         } catch (error) {
           this.error = true;
@@ -90,6 +94,10 @@ export default {
   computed: {
     filteredUsers() {
       let filteredUsers = this.users;
+      console.log(
+        "🚀 ~ file: MeetTheTeam.vue ~ line 93 ~ filteredUsers ~ filteredUsers",
+        filteredUsers
+      );
 
       if (this.searchInput) {
         filteredUsers = filteredUsers.filter((user) =>
@@ -107,10 +115,6 @@ export default {
         );
       }
       return filteredUsers.slice(0, this.currentPage * this.resultsPerPage);
-    },
-
-    canLoadMore() {
-      return this.filteredUsers.length < this.users.length;
     },
   },
 };

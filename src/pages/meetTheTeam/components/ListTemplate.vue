@@ -76,11 +76,13 @@ export default {
   position: inherit;
   border-radius: 20px;
 }
+
 .div2 {
   width: 100%;
   border-radius: 20px 20px 20px 0px;
   background: white;
 }
+
 .user-list ul {
   width: 100%;
   display: grid;
@@ -111,29 +113,36 @@ export default {
   top: 15%;
   left: 40%;
 }
+
 .name {
   margin-left: 15%;
 }
+
 .location {
   margin-left: 15%;
   margin-top: -15px;
 }
+
 .fill {
   height: 1px;
 }
+
 @media (min-width: 600px) {
   .user-list li {
     width: 670px;
   }
+
   .div1 {
     width: 10%;
     height: 100px;
     position: inherit;
     border-radius: 20px;
   }
+
   .name {
     margin-left: 8%;
   }
+  
   .location {
     margin-left: 8%;
   }
