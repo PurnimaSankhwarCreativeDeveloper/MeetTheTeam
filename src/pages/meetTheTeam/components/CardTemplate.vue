@@ -43,15 +43,15 @@ export default {
     };
   },
 
-    mounted() {
-      this.observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          this.$emit("childMounted", this.currentPage);
-          this.currentPage += 1;
-        }
-      });
-      this.observer.observe(this.$refs.sentinel);
-    },
+  mounted() {
+    this.observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        this.$emit("childMounted", this.currentPage);
+        this.currentPage += 1;
+      }
+    });
+    this.observer.observe(this.$refs.sentinel);
+  },
 
   methods: {
     fillColor() {

@@ -4,7 +4,7 @@ This code is a Vue.js application that displays a list of users and allows the u
 The MeetTheTeam.vue component fetches user data from an API and stores it in an array. The component then filters and sorts the user data based on user input and state changes. The TopBar component emits events when the user inputs search criteria, sorts users, or toggles the view mode. The parent component (MeetTheTeam.vue) listens to these events and updates the state and displayed data accordingly.
 
 ```
-path: /meetTheTeam
+path: http://<host>:<port>/meetTheTeam
 ```
 
 ## Project setup

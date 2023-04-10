@@ -6,10 +6,10 @@
         :key="index"
         :style="{ backgroundColor: this.applyColors[index] }"
       >
-        <div class="div1" :style="{ backgroundColor: this.applyColors[index] }">
+        <div class="img-div" :style="{ backgroundColor: this.applyColors[index] }">
           <img :src="user.picture.medium" :alt="user.name.first" />
         </div>
-        <div class="div2">
+        <div class="user-details">
           <h2 class="name">{{ user.name.first }} {{ user.name.last }}</h2>
           <p class="location">{{ user.location.city }}</p>
           <p class="fill"></p>
@@ -70,14 +70,14 @@ export default {
 </script>
 
 <style>
-.div1 {
+.img-div {
   width: 20%;
   height: 100px;
   position: inherit;
   border-radius: 20px;
 }
 
-.div2 {
+.user-details {
   width: 100%;
   border-radius: 20px 20px 20px 0px;
   background: white;
@@ -132,7 +132,7 @@ export default {
     width: 670px;
   }
 
-  .div1 {
+  .img-div {
     width: 10%;
     height: 100px;
     position: inherit;
@@ -142,7 +142,7 @@ export default {
   .name {
     margin-left: 8%;
   }
-  
+
   .location {
     margin-left: 8%;
   }
